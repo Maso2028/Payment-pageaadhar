@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manual Payment Gateway</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 30px; background: #f9f9f9; }
+    .container { max-width: 400px; margin: auto; padding: 20px; background: #fff; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0,0,0,0.1); }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #aaa; }
+    button { background: #28a745; color: white; font-weight: bold; border: none; cursor: pointer; }
+    button:hover { background: #218838; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Pay ₹599 via QR Code</h2>
+    <img src="YOUR_QR_CODE_IMAGE.png" width="250" alt="Scan QR">
+    <p>After making the payment, please enter your UTR/Transaction ID below:</p>
+
+    <form id="utrForm">
+      <input type="text" id="utr" placeholder="Enter UTR Number" required>
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    const whatsappNumber = "917318432028"; // WhatsApp number in international format
+    const redirectLink = "https://www.vlefastprint.in/register.php?ref=NzMxODQzMjAyOA=="; // Your redirect link
+
+    document.getElementById("utrForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let utr = document.getElementById("utr").value;
+
+      // WhatsApp redirect
+      let waUrl = `https://wa.me/${whatsappNumber}?text=New+Payment+Received!+UTR:+${utr}`;
+      window.open(waUrl, "_blank");
+
+      // Show confirmation
+      document.getElementById("msg").innerText = "✅ UTR submitted successfully! Please wait...";
+
+      // Redirect after 3 minutes
+      setTimeout(() => {
+        window.location.href = redirectLink;
+      }, 180000); // 3 min = 180000 ms
+    });
+  </script>
+
+</body>
+</html>
